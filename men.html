@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Men's Clothing</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="images/logoweb21.jpg">
+  <style>
+    body {
+      font-family: "Cairo", sans-serif;
+      background: #f3f3f3;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav {
+      background: #111;
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav .logo { font-size: 1.2rem; font-weight: bold; }
+    nav a { color: #fff; text-decoration: none; margin-left: 20px; transition: 0.3s; }
+    nav a:hover { color: #c9a227; }
+
+    header {
+      background: url('images/opp.jpg') center/cover no-repeat;
+      color: #fff;
+      text-align: center;
+      padding: 100px 20px;
+      position: relative;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+    }
+
+    header .overlay {
+      position: relative;
+      z-index: 2;
+    }
+
+    header h1 { font-size: 2.5rem; margin-bottom: 10px; color: #f6e58d; }
+    header h2 { font-size: 1.8rem; margin: 0; }
+    header p { color: #eee; font-size: 1rem; }
+
+    .container {
+      width: 90%;
+      margin: 40px auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 25px;
+    }
+
+    .product {
+      background: #fff;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-align: center;
+    }
+
+    .product:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+    .product img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+    }
+
+    .product h3 { margin: 10px 0 5px; }
+    .product p { color: #777; margin: 5px 0; }
+
+    .product button {
+      background: #111;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      margin: 5px;
+      transition: 0.3s;
+    }
+
+    .product button:hover {
+      background: #c9a227;
+      color: #111;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #f9f9f9;
+      border-top: 1px solid #ddd;
+      color: #666;
+      margin-top: 50px;
+    }
+
+    /* ===== Floating cart button ===== */
+    .floating-cart {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      background: #111;
+      color: #fff;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      cursor: pointer;
+      z-index: 9999;
+      transition: transform .15s ease;
+    }
+    .floating-cart:hover { transform: translateY(-4px); }
+
+    .floating-cart .badge {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: #c9a227;
+      color: #111;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 700;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    /* toast */
+    .toast {
+      position: fixed;
+      right: 20px;
+      bottom: 90px;
+      background: #111;
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 10px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+      transform: translateY(20px);
+      opacity: 0;
+      transition: all .28s ease;
+      z-index: 9998;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    @media (max-width:600px){
+      .product img { height: 220px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="overlay">
+    <h1>MODERN CLOTHING STORE</h1>
+    <h2>MEN'S FASHION 👕</h2>
+    <p>Discover your style with the latest fashion</p>
+  </div>
+</header>
+
+<div class="container" id="productList"></div>
+
+<!-- Floating Cart Button -->
+<div class="floating-cart" id="floatingCartBtn" title="عرض السلة">
+  <div class="badge" id="cartCount">0</div>
+  <!-- simple cart icon -->
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path d="M6 6h15l-1.5 9h-12L6 6z" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="10" cy="20" r="1" fill="#fff"/><circle cx="18" cy="20" r="1" fill="#fff"/>
+  </svg>
+</div>
+
+<!-- toast -->
+<div id="toast" class="toast">تمت الإضافة إلى السلة</div>
+
+<footer>
+  <p>© 2025 Omar Design – Web Designer</p>
+</footer>
+
+<script>
+  localStorage.setItem("lastCategory", "men");
+
+  const products = [
+   {id: 1, name: "White T-Shirt", size: "M, L, XL, 2XL", price: 150, img: "images/a.jpg", desc: "Classic white cotton T-shirt with modern fit."},
+   {id: 2, name: "Jeans", size: "M, L, XL, 2XL", price: 180, img: "images/a1.jpg", desc: "Stylish black T-shirt for everyday wear."},
+   {id: 3, name: "sweaters ", size: "M, L, XL, 2XL", price: 170, img: "images/a2.jpg", desc: "Trendy striped tee with soft fabric."},
+   {id: 4, name: "Cutting Jeans ", size: "M, L, XL, 2XL", price: 350, img: "images/a3.jpg", desc: "Classic denim jacket for a casual look."},
+   {id: 5, name: "Bumb Jackets", size: "M, L, XL, 2XL", price: 850, img: "images/a4.jpg", desc: "Elegant black suit perfect for formal occasions."},
+   {id: 6, name: "White T-Shirt", size: "M, L, XL, 2XL", price: 600, img: "images/a5.jpg", desc: "High-quality leather jacket with modern style."},
+   {id: 7, name: "jeans jacket", size: "M, L, XL, 2XL", price: 250, img: "images/a6.jpg", desc: "Soft hoodie ideal for daily wear."},
+   {id: 8, name: "Classic Shirt", size: "M, L, XL, 2XL", price: 200, img: "images/a7.jpg", desc: "Formal shirt made from breathable cotton."},
+   {id: 9, name: "Men's leather jacket", size: "M, L, XL, 2XL", price: 190, img: "images/a8.jpg", desc: "Cool printed T-shirt with unique design."},
+   {id: 11, name: "Blue Hoodie", size: "M, L, XL, 2XL", price: 220, img: "images/a9.jpg", desc: "Crisp white shirt perfect for work or events."},
+   {id: 12, name: "White T-Shirt", size: "M, L, XL, 2XL", price: 220, img: "images/a11.jpg", desc: "Sleek black shirt with elegant buttons."},
+   {id: 13, name: "Gray Hoodie", size: "M, L, XL, 2XL", price: 230, img: "images/a12.jpg", desc: "Comfortable hoodie with soft interior lining."},
+   {id: 14, name: "Formal Tie", size: "One Size", price: 80, img: "images/a13.jpg", desc: "Classic tie for a professional look."},
+   {id: 15, name: "Slim Fit Suit", size: "M, L, XL, 2XL", price: 900, img: "images/a14.jpg", desc: "Modern slim-fit suit with elegant finish."},
+   {id: 16, name: "Casual Suit", size: "M, L, XL, 2XL", price: 320, img: "images/a15.jpg", desc: "Light jacket suitable for all seasons."},
+   {id: 17, name: "White Sweatshirt", size: "M, L, XL, 2XL", price: 210, img: "images/a16.jpg", desc: "Soft cotton sweatshirt for comfort."},
+   {id: 18, name: "Orange Formal Suit", size: "M, L, XL, 2XL", price: 190, img: "images/a17.jpg", desc: "Classic polo shirt with elegant collar."},
+   {id: 19, name: "Blazers ", size: "M, L, XL, 2XL", price: 600, img: "images/a18.jpg", desc: "Warm and stylish jacket for cold weather."},
+   {id: 20, name: "Sports Shoes ", size: "M, L, XL, 2XL", price: 160, img: "images/a19.jpg", desc: "Everyday T-shirt with premium quality."},
+   {id: 21, name: "Formal Shirt", size: "One Size", price: 100, img: "images/a20.jpg", desc: "Elegant tie set with cufflinks."},
+   {id: 22, name: "Formal Shirt (one color)", size: "M, L, XL, 2XL", price: 450, img: "images/a21.jpg", desc: "Perfect for business meetings or events."},
+   {id: 23, name: "Formal Shoes", size: "M, L, XL, 2XL", price: 210, img: "images/a22.jpg", desc: "Comfortable shirt with modern design."},
+   {id: 24, name: "Formal Suit", size: "M, L, XL, 2XL", price: 220, img: "images/a23.jpg", desc: "Trendy checkered pattern shirt."},
+   {id: 25, name: "Blazers", size: "M, L, XL, 2XL", price: 250, img: "images/a24.jpg", desc: "Stylish denim shirt for casual style."},
+   {id: 26, name: "Black Jackets", size: "M, L, XL, 2XL", price: 950, img: "images/a25.jpg", desc: "Elegant gray suit with fine details."},
+   {id: 27, name: "Sweatshirt", size: "M, L, XL, 2XL", price: 300, img: "images/a26.jpg", desc: "Perfect jacket for spring and fall."},
+   {id: 28, name: "Formal Suit", size: "M, L, XL, 2XL", price: 200, img: "images/a27.jpg", desc: "Classic polo in pure white."},
+   {id: 29, name: "White T-Shirt", size: "M, L, XL, 2XL", price: 200, img: "images/a28.jpg", desc: "Elegant black polo for daily wear."},
+   {id: 30, name: "Jeans Jacket", size: "M, L, XL, 2XL", price: 230, img: "images/a29.jpg", desc: "Soft striped shirt with fresh look."},
+   {id: 31, name: "Casual Shirt", size: "M, L, XL, 2XL", price: 270, img: "images/a30.jpg", desc: "Comfortable pants for smart casual outfits."},
+   {id: 32, name: "White T-shirt", size: "M, L, XL, 2XL", price: 300, img: "images/a31.jpg", desc: "Slim-fit black jeans with stretch fabric."},
+   {id: 33, name: "Black T-shirt", size: "M, L, XL, 2XL", price: 300, img: "images/a32.jpg", desc: "Classic blue denim jeans."},
+   {id: 34, name: "Casul T-shirt", size: "One Size", price: 90, img: "images/a33.jpg", desc: "Stylish tie for classy appearance."},
+   {id: 35, name: "White T-shirt", size: "M, L, XL, 2XL", price: 280, img: "images/a34.jpg", desc: "Formal vest that completes your suit look."},
+   {id: 36, name: "Formal Suit ", size: "M, L, XL, 2XL", price: 350, img: "images/a35.jpg", desc: "Light sport jacket with modern touch."},
+   {id: 37, name: "Blazers ", size: "M, L, XL, 2XL", price: 190, img: "images/a36.jpg", desc: "Comfortable shorts for hot days."},
+   {id: 38, name: "Yellow Sweatshirt", size: "M, L, XL, 2XL", price: 620, img: "images/a37.jpg", desc: "Premium brown leather jacket."},
+   {id: 39, name: "Blazers", size: "M, L, XL, 2XL", price: 1000, img: "images/a38.jpg", desc: "Elegant white suit for special occasions."},
+   {id: 40, name: "White T-Shirt", size: "M, L, XL, 2XL", price: 150, img: "images/a39.jpg", desc: "Classic white cotton T-shirt with modern fit."},
+   {id: 41, name: "Casual Hoodie", size: "M, L, XL, 2XL", price: 180, img: "images/a40.jpg", desc: "Stylish black T-shirt for everyday wear."},
+   {id: 42, name: "White T-Shirt ", size: "M, L, XL, 2XL", price: 170, img: "images/a41.jpg", desc: "Trendy striped tee with soft fabric."},
+   {id: 43, name: "Classic Shirt ", size: "M, L, XL, 2XL", price: 350, img: "images/a42.jpg", desc: "Classic denim jacket for a casual look."}
+  ];
+
+  
+
+
+
+
+
+
+
+
+
+  const list = document.getElementById("productList");
+  products.forEach(p => {
+    list.innerHTML += `
+      <div class="product">
+        <img src="${p.img}" alt="${p.name}">
+        <h3>${p.name}</h3>
+        <p>SIZE: ${p.size}</p>
+        <p>${p.price} جنيه</p>
+        <button onclick="addToCart(${p.id})">Add To Cart</button>
+        <button onclick="viewDetails(${p.id})">تفاصيل المنتج</button>
+      </div>
+    `;
+  });
+
+  /* ---------- Cart + Toast logic ---------- */
+
+  function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const countEl = document.getElementById("cartCount");
+    countEl.textContent = cart.length || 0;
+  }
+
+  function showToast(message = "تمت الإضافة إلى السلة") {
+    const t = document.getElementById("toast");
+    t.textContent = message;
+    t.classList.add("show");
+    setTimeout(() => t.classList.remove("show"), 1600);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    updateCartCount();
+
+    const btn = document.getElementById('floatingCartBtn');
+    if (btn) btn.addEventListener('click', () => {
+      window.location.href = 'cart.html';
+    });
+  });
+
+  function addToCart(id) {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const item = products.find(p => p.id === id);
+    if (!item) return showToast("خطأ: المنتج غير موجود");
+
+    const productToAdd = {
+      id: item.id,
+      name: item.name,
+      price: item.price,
+      size: item.size,
+      img: item.img
+    };
+
+    // --- خيار: منع التكرار وزيادة qty بدلاً من إضافة نسخة جديدة ---
+    // const existing = cart.find(x => x.id === productToAdd.id);
+    // if (existing) { existing.qty = (existing.qty || 1) + 1; }
+    // else { productToAdd.qty = 1; cart.push(productToAdd); }
+
+    // الافتراضي: نضيف عنصر جديد كل مرة
+    cart.push(productToAdd);
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    updateCartCount();
+    showToast("✅ تمت إضافة المنتج إلى السلة");
+  }
+
+ function viewDetails(id) {
+  const item = products.find(p => p.id === id);
+
+  if (!item) return; // لا نعرض أي رسالة، نخرج بهدوء فقط
+
+  // الحالات الخاصة لصفحات مستقلة
+  if (item.name.trim().toLowerCase() === "jeans") {
+    window.location.href = "jeans.html"; // صفحة البنطلون
+  } 
+  else if (item.name.trim().toLowerCase() === "sweaters") {
+    window.location.href = "sweaters.html"; // صفحة السويتر
+  } 
+  else if (item.name.trim().toLowerCase() === "white t-shirt") {
+    window.location.href = "white-tshirt.html"; // صفحة التيشيرت الأبيض
+  } 
+  else {
+    // باقي المنتجات تفتح صفحة التفاصيل العامة
+    localStorage.setItem("selectedProduct", JSON.stringify(item));
+    window.location.href = "product-details.html";
+  }
+}
+
+
+</script>
+
+</body>
+</html>

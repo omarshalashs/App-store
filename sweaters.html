@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sweaters</title>
+   <link rel="icon" type="image/png" href="images/logoweb21.jpg">
+
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    .product-details {
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      padding: 20px;
+      display: inline-block;
+      max-width: 400px;
+    }
+    img {
+      width: 100%;
+      border-radius: 10px;
+    }
+    h2 { color: #333; }
+    p { color: #666; }
+    .price {
+      color: #c0392b;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #000;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="product-details">
+    <img src="images/a2.jpg" alt="Sweater">
+    <img src="images/s2.jpg" alt="Sweater">
+    <img src="images/s1.jpg" alt="Sweater">
+    <img src="images/s3.jpg" alt="Sweater">
+    <img src="images/s4.jpg" alt="Sweater">
+    <img src="images/s5.jpg" alt="Sweater">
+        <h2>سويتر شتوي</h2>    
+
+    <p>سويتر أنيق بخامة صوف ناعمة توفر الدفء والراحة في فصل الشتاء. تصميم عصري يناسب الإطلالة اليومية والكاجوال.</p>
+    <p class="price">200 جنيه</p>
+    <button onclick="addToCart()">🛒 أضف إلى السلة</button>
+    <br><br>
+    <button onclick="BuyNow()" class="buy-btn"> Buy Now 🛍️</button>
+    <script>
+function BuyNow() {
+  // نختار طريقة الدفع بشكل شكلي
+  let method = prompt("Choose one pay :\n1. Card \VISA \n2. Fawry ", "1");
+  
+  if(method === "1") {
+    alert("By VISA ");
+  } else if(method === "2") {
+    alert("By Fawry ");
+  } else {
+    alert("لم يتم اختيار طريقة دفع صحيحة");
+  }
+}
+
+// الكود القديم للسلة
+function addToCart() {
+  const product = {
+    name: "بنطلون جينز",
+    price: 250,
+    img: "images/jeans.jpg"
+  };
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  cart.push(product);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  alert("✅ تمت إضافة المنتج إلى السلة!");
+}
+</script>
+  </div>
+
+  <script>
+    function goBack() {
+      window.history.back();
+    }
+
+    function addToCart() {
+      const product = {
+        name: "سويتر شتوي",
+        price: 200,
+        img: "images/sweater.jpg"
+      };
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cart.push(product);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert("✅ تمت إضافة المنتج إلى السلة!");
+    }
+  </script>
+</body>
+</html>

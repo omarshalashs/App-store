@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CLOTHING</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+          <link rel="icon" type="image/png" href="images/logoweb21.jpg">
+
+  <style>
+    body {
+      font-family: "Cairo", sans-serif;
+      background: #f3f3f3;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* ===== Navbar ===== */
+    nav {
+      background: #111;
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 20px;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #c9a227;
+    }
+
+    /* ===== Header ===== */
+    header {
+      background: linear-gradient(135deg, #000, #444);
+      color: #fff;
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      color: #d1d1d1;
+      font-size: 1.1rem;
+    }
+
+    /* ===== Products Grid ===== */
+    .container {
+      width: 90%;
+      margin: 40px auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 25px;
+    }
+
+    .product {
+      background: #fff;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .product:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+    .product img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .product:hover img {
+      transform: scale(1.05);
+    }
+
+    .product-info {
+      padding: 20px;
+      text-align: center;
+    }
+
+    .product h3 {
+      margin: 0;
+      font-size: 1.2rem;
+      color: #222;
+    }
+
+    .product p {
+      color: #777;
+      margin: 10px 0;
+    }
+
+    .product button {
+      background: #111;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .product button:hover {
+      background: #c9a227;
+      color: #111;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #f9f9f9;
+      border-top: 1px solid #ddd;
+      color: #666;
+      margin-top: 50px;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.8rem; }
+      header p { font-size: 1rem; }
+      .product img { height: 220px; }
+      nav { flex-direction: column; }
+      nav a { margin: 10px 0; }
+    }
+  </style>
+</head>
+<body>
+  <header class="cover-header">
+  <div class="overlay">
+    <h1 class="brand"> MODERN CLOTHING STORE </h1>
+    <h2>WOMEN'S FASHION 👗</h2>
+    <p>Discover your style with the latest fashion </p>
+  </div>
+</header>
+
+<div class="container" id="productList"></div>
+
+<footer>
+  <p>© 2025 Omar Design – Web Designer</p>
+</footer>
+
+<style>
+/* ===== Header Cover Section ===== */
+.cover-header {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  background: url('images/www.jpg') center/cover no-repeat; /* ← غير دي بصورة بانر حريمي */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  overflow: hidden;
+}
+
+.cover-header::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.overlay {
+  position: relative;
+  text-align: center;
+  z-index: 2;
+  animation: fadeUp 1.5s ease;
+}
+
+.overlay h1.brand {
+  font-size: 2.8rem;
+  margin-bottom: 10px;
+  color: #f6e58d;
+  letter-spacing: 2px;
+}
+
+.overlay h2 {
+  font-size: 2rem;
+  margin: 5px 0;
+  color: #fff;
+}
+
+.overlay p {
+  font-size: 1.1rem;
+  color: #eee;
+  margin-top: 10px;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .cover-header { height: 250px; }
+  .overlay h1.brand { font-size: 1.8rem; }
+  .overlay h2 { font-size: 1.2rem; }
+  .overlay p { font-size: 0.9rem; }
+}
+</style>
+
+
+  <script>
+      localStorage.setItem("lastCategory", "women");
+
+    const products = [
+  {id: 1, name: "Benetlon Jeans", size: "M, L, XL, 2XL", price: 150, img: "images/21.jpg", desc: "Classic jeans with modern fit."},
+  {id: 2, name: "Chic Dress", size: "M, L, XL, 2XL", price: 220, img: "images/22.jpg", desc: "Elegant dress with matching bag."},
+  {id: 3, name: "Elegant Blouse", size: "M, L, XL, 2XL", price: 99, img: "images/23.jpg", desc: "Soft and stylish blouse for daily wear."},
+  {id: 4, name: "Stylish Blouse", size: "M, L, XL, 2XL", price: 180, img: "images/24.jpg", desc: "Chic blouse for elegant occasions."},
+  {id: 5, name: "Formal Suit Set", size: "M, L, XL, 2XL", price: 150, img: "images/25.jpg", desc: "Formal suit with matching bag."},
+  {id: 6, name: "Classic Chemise", size: "M, L, XL, 2XL", price: 220, img: "images/26.jpg", desc: "Light fabric chemise, perfect for work."},
+  {id: 7, name: "Soft Pajama", size: "M, L, XL, 2XL", price: 220, img: "images/27.jpg", desc: "Comfortable pajama for relaxing nights."},
+  {id: 8, name: "Trench Coat", size: "M, L, XL, 2XL", price: 220, img: "images/28.jpg", desc: "Stylish coat for cool evenings."},
+  {id: 9, name: "Elegant Tunic", size: "M, L, XL, 2XL", price: 220, img: "images/29.jpg", desc: "Flowy tunic with elegant touch."},
+  {id: 10, name: "Modern Blouse", size: "M, L, XL, 2XL", price: 220, img: "images/210.jpg", desc: "Trendy blouse with soft texture."},
+  {id: 11, name: "Classy Top", size: "M, L, XL, 2XL", price: 220, img: "images/0.jpg", desc: "Chic top for daily outfits."},
+  {id: 12, name: "Casual Blouse", size: "M, L, XL, 2XL", price: 220, img: "images/01.jpg", desc: "Simple and stylish casual blouse."},
+  {id: 13, name: "Charming Dress", size: "M, L, XL, 2XL", price: 220, img: "images/02.jpg", desc: "Graceful dress with soft fabric."},
+  {id: 14, name: "Light Tunic", size: "M, L, XL, 2XL", price: 220, img: "images/03.jpg", desc: "Elegant tunic for sunny days."},
+  {id: 15, name: "Elegant Outfit", size: "M, L, XL, 2XL", price: 220, img: "images/04.jpg", desc: "Perfect outfit for classy style."},
+  {id: 16, name: "Stylish Blouse", size: "M, L, XL, 2XL", price: 220, img: "images/05.jpg", desc: "Trendy blouse with smooth touch."},
+  {id: 17, name: "Soft Blouse", size: "M, L, XL, 2XL", price: 220, img: "images/06.jpg", desc: "Soft texture for elegant comfort."},
+  {id: 18, name: "Modern Dress", size: "M, L, XL, 2XL", price: 220, img: "images/11.jpg", desc: "Modern style for confident look."},
+  {id: 19, name: "Stylish Top", size: "M, L, XL, 2XL", price: 220, img: "images/12.jpg", desc: "Perfect mix of comfort and style."},
+  {id: 20, name: "Trendy Dress", size: "M, L, XL, 2XL", price: 220, img: "images/13.jpg", desc: "Trendy and elegant dress."},
+  {id: 21, name: "Elegant Blouse", size: "M, L, XL, 2XL", price: 220, img: "images/14.jpg", desc: "Simple design, soft material."},
+  {id: 22, name: "Formal Dress", size: "M, L, XL, 2XL", price: 220, img: "images/15.jpg", desc: "Perfect for formal occasions."},
+  {id: 23, name: "Chic Tunic", size: "M, L, XL, 2XL", price: 220, img: "images/16.jpg", desc: "Elegant and classy long tunic."},
+  {id: 24, name: "Light Blouse", size: "M, L, XL, 2XL", price: 220, img: "images/17.jpg", desc: "Light fabric with elegant style."},
+  {id: 25, name: "Elegant Top", size: "M, L, XL, 2XL", price: 220, img: "images/18.jpg", desc: "Elegant top for everyday wear."},
+  {id: 26, name: "Trendy Outfit", size: "M, L, XL, 2XL", price: 220, img: "images/19.jpg", desc: "Trendy and stylish women outfit."},
+  {id: 27, name: "Charming Blouse", size: "M, L, XL, 2XL", price: 220, img: "images/3.jpg", desc: "Charming design with soft touch."},
+  {id: 28, name: "Modern Tunic", size: "M, L, XL, 2XL", price: 220, img: "images/31.jpg", desc: "Modern tunic for daily wear."},
+  {id: 29, name: "Soft Dress", size: "M, L, XL, 2XL", price: 220, img: "images/32.jpg", desc: "Soft and elegant women dress."},
+  {id: 30, name: "Classy Blouse", size: "M, L, XL, 2XL", price: 220, img: "images/33.jpg", desc: "Classic design, high comfort."},
+  {id: 31, name: "Stylish Outfit", size: "M, L, XL, 2XL", price: 220, img: "images/34.jpg", desc: "Trendy outfit for any event."},
+  {id: 32, name: "Elegant Dress", size: "M, L, XL, 2XL", price: 220, img: "images/35.jpg", desc: "Elegant dress for all occasions."},
+  {id: 33, name: "Modern Blouse", size: "M, L, XL, 2XL", price: 220, img: "images/36.jpg", desc: "Modern look with elegant style."},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    ];
+
+    const list = document.getElementById("productList");
+products.forEach(p => {
+  list.innerHTML += `
+    <div class="product">
+      <img src="${p.img}" alt="${p.name}">
+      <div class="product-info">
+        <h3>${p.name}</h3>
+        <p class="sizes">SIZE: ${p.size}</p>
+        <p>${p.price} جنيه</p>
+        <button onclick="addToCart(${p.id})">Add To Cart</button>
+        <button onclick="viewDetails(${p.id})">تفاصيل المنتج</button>
+      </div>
+    </div>
+  `;
+});
+
+
+   /* ---------- Cart + Toast logic ---------- */
+
+  function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const countEl = document.getElementById("cartCount");
+    countEl.textContent = cart.length || 0;
+  }
+
+  function showToast(message = "تمت الإضافة إلى السلة") {
+    const t = document.getElementById("toast");
+    t.textContent = message;
+    t.classList.add("show");
+    setTimeout(() => t.classList.remove("show"), 1600);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    updateCartCount();
+
+    const btn = document.getElementById('floatingCartBtn');
+    if (btn) btn.addEventListener('click', () => {
+      window.location.href = 'cart.html';
+    });
+  });
+
+  function addToCart(id) {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const item = products.find(p => p.id === id);
+    if (!item) return showToast("خطأ: المنتج غير موجود");
+
+    const productToAdd = {
+      id: item.id,
+      name: item.name,
+      price: item.price,
+      size: item.size,
+      img: item.img
+    };
+
+    // --- خيار: منع التكرار وزيادة qty بدلاً من إضافة نسخة جديدة ---
+    // const existing = cart.find(x => x.id === productToAdd.id);
+    // if (existing) { existing.qty = (existing.qty || 1) + 1; }
+    // else { productToAdd.qty = 1; cart.push(productToAdd); }
+
+    // الافتراضي: نضيف عنصر جديد كل مرة
+    cart.push(productToAdd);
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    updateCartCount();
+    showToast("✅ تمت إضافة المنتج إلى السلة");
+  }
+
+ function viewDetails(id) {
+  const item = products.find(p => p.id === id);
+  if (!item) return;
+
+  const name = item.name.trim().toLowerCase();
+
+  // الحالة الخاصة بصفحة الوومن
+  if (name === "benetlon jeans") {
+    window.location.href = "Benetlon Jeans.html"; // صفحة البنطلون جينز
+  } else {
+    // باقي المنتجات تفتح صفحة التفاصيل العامة
+    localStorage.setItem("selectedProduct", JSON.stringify(item));
+    window.location.href = "product-details.html";
+  }
+}
+
+
+</script>
+
+<!-- زر السلة العائم -->
+<div class="cart-icon" id="floatingCartBtn">
+  🛒 <span id="cartCount">0</span>
+</div>
+
+<!-- مربع التوست -->
+<div id="toast"></div>
+
+<style>
+/* ===== زر السلة العائم ===== */
+.cart-icon {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background: #111;
+  color: #fff;
+  font-size: 26px;
+  padding: 15px 25px;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  transition: 0.3s;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cart-icon:hover {
+  background: #c9a227;
+  color: #111;
+}
+
+#cartCount {
+  background: #c9a227;
+  color: #111;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 2px 10px;
+  border-radius: 12px;
+}
+
+/* ===== Toast الرسالة العائمة ===== */
+#toast {
+  visibility: hidden;
+  min-width: 200px;
+  background-color: #111;
+  color: #fff;
+  text-align: center;
+  border-radius: 30px;
+  padding: 14px;
+  position: fixed;
+  bottom: 100px;
+  right: 25px;
+  z-index: 1001;
+  opacity: 0;
+  transition: opacity 0.5s, visibility 0.5s;
+}
+
+#toast.show {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+
+</html>

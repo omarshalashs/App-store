@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLOTHING</title>
+  <link rel="stylesheet" href="css/style.css">
+          <link rel="icon" type="image/png" href="images/logoweb21.jpg">
+
+  <style>
+    body {
+      font-family: "Cairo", sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url('images/op.jpg') center center / cover no-repeat fixed;
+      position: relative;
+      color: #111;
+    }
+
+    /* طبقة شفافة فوق الخلفية */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(255, 255, 255, 0.8); /* لتفتيح الصورة */
+      z-index: -1;
+    }
+
+    h2.title {
+      text-align: center;
+      margin: 40px 0 20px;
+      color: #111;
+      font-size: 2.2rem;
+    }
+
+    .categories {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 40px;
+      padding: 40px;
+    }
+
+    .category {
+      position: relative;
+      width: 300px;
+      height: 400px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: transform 0.4s ease, box-shadow 0.3s ease;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards;
+      background: #fff;
+    }
+
+    .category:nth-child(1) { animation-delay: 0.2s; }
+    .category:nth-child(2) { animation-delay: 0.5s; }
+
+    .category:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .category img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .category:hover img {
+      transform: scale(1.1);
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.45);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: background 0.3s ease;
+    }
+
+    .category:hover .overlay {
+      background: rgba(0, 0, 0, 0.65);
+    }
+
+    .overlay h2 {
+      color: #fff;
+      font-size: 1.8rem;
+      letter-spacing: 1px;
+      background: rgba(255,255,255,0.1);
+      padding: 10px 25px;
+      border-radius: 10px;
+      backdrop-filter: blur(3px);
+      transition: transform 0.3s ease;
+    }
+
+    .category:hover .overlay h2 {
+      transform: scale(1.1);
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h2 class="title">الأقسام</h2>
+
+  <div class="categories">
+    <!-- القسم الرجالي -->
+    <a href="men.html" class="category">
+      <img src="images/men.jpg" alt="القسم الرجالي">
+      <div class="overlay">
+        <h2>👕 القسم الرجالي</h2>
+      </div>
+    </a>
+
+    <!-- القسم الحريمي -->
+    <a href="women.html" class="category">
+      <img src="images/www.jpg" alt="القسم الحريمي">
+      <div class="overlay">
+        <h2>👗 القسم الحريمي</h2>
+      </div>
+    </a>
+  </div>
+
+</body>
+<!-- زر الرجوع للصفحة السابقة -->
+<div style="text-align:center; margin:40px 0;">
+  <button onclick="goBack()" 
+    style="
+      background:#111;
+      color:#fff;
+      border:none;
+      padding:12px 25px;
+      border-radius:30px;
+      font-size:1rem;
+      cursor:pointer;
+      transition:0.3s;
+    ">
+    ⬅️ BACK
+  </button>
+</div>
+
+<script>
+  function goBack() {
+    window.location.href = "index.html";
+
+    // window.history.back();
+  }
+</script>
+
+</html>

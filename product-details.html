@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تفاصيل المنتج</title>
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    .product-details {
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      padding: 20px;
+      display: inline-block;
+      max-width: 400px;
+    }
+    img {
+      width: 100%;
+      border-radius: 10px;
+    }
+    h2 { color: #333; }
+    p { color: #666; }
+    .price {
+      color: #c0392b;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #000;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="product-details">
+    <img id="product-img" src="" alt="">
+    <h2 id="product-name"></h2>
+    <p id="product-desc"></p>
+    <p class="price" id="product-price"></p>
+    <button onclick="addToCart()">🛒 أضف إلى السلة</button>
+    <br><br>
+    <button onclick="goBack()">⬅ رجوع</button>
+  </div>
+
+  <script>
+    const product = JSON.parse(localStorage.getItem("selectedProduct"));
+    if (product) {
+      document.getElementById("product-img").src = product.img;
+      document.getElementById("product-name").textContent = product.name;
+      document.getElementById("product-desc").textContent = product.description || "لا يوجد وصف للمنتج.";
+      document.getElementById("product-price").textContent = product.price + " جنيه";
+    }
+
+    function goBack() {
+      window.history.back();
+    }
+
+    function addToCart() {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cart.push(product);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert("✅ تمت إضافة المنتج إلى السلة!");
+    }
+  </script>
+</body>
+</html>
